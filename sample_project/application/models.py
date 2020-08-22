@@ -40,6 +40,12 @@ class TeamPlayerStructure(models.Model):
 	    return self.firstname
 
 
+	@property
+	def get_fullname(self):
+		return self.firstname
+
+
+
 
 class playerHistory(models.Model):
 	team_player = models.ForeignKey(TeamPlayerStructure,null=True, related_name ="playerhistory" , blank=True, on_delete=models.SET_NULL)
@@ -50,11 +56,20 @@ class playerHistory(models.Model):
 	hundreds = models.IntegerField(blank=True, null=True)
 
 
+
+
 class Matches(models.Model):
-	team1 = models.CharField(max_length=200)
-	team2 = models.CharField(max_length=200)
+	tournament_name = models.CharField(max_length=200)
+	team1 = models.ForeignKey(TeamStructure,null=True, related_name ="club_team_a" , blank=True, on_delete=models.SET_NULL)
+	team2 = models.ForeignKey(TeamStructure,null=True, related_name ="club_beam_b" , blank=True, on_delete=models.SET_NULL)
 	winner_team = models.ForeignKey(TeamStructure,null=True, related_name ="teammatcheswinner" , blank=True, on_delete=models.SET_NULL)
 	looser_team = models.ForeignKey(TeamStructure,null=True, related_name ="teammatchesloser" , blank=True, on_delete=models.SET_NULL)
+
+	def __str__(self):
+		return self.tournament_name
+
+# class MatchesWinner(models.Model):
+# 	match_winner = models.ForeignKey(Matches,null=True, related_name ="match_related" , blank=True, on_delete=models.SET_NULL)
 
 
 class Tablepoint(models.Model):

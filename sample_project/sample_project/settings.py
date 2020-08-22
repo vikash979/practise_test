@@ -25,7 +25,7 @@ SECRET_KEY = '@3(af#zt^o3aa3#$4%z62ta(bpu@923giwqrtbxr7yz(id$eab'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['192.168.0.6','localhost']
+ALLOWED_HOSTS = []
 AUTH_USER_MODEL = "users.User"
 
 
