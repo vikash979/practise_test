@@ -443,6 +443,24 @@ function teamtornament()
                                    })
                                  }
                             </script>
+                            <style>
+                              .blink_me {
+                                   animation: blinker 1s linear infinite;
+                                   color:red;
+                                   background-color: #f01010;
+                                   text-transform: uppercase;font-weight: bold
+
+
+
+                                 }
+
+                                 @keyframes blinker {
+                                   50% {
+                                     opacity: 0;
+                                   }
+                                 }
+
+                            </style>
               
 
                         </div>
@@ -455,8 +473,8 @@ function teamtornament()
             <div class="row">
                <div class="full">
                   <div class="right-match-time">
-                     <h2>Next Match</h2>
-                     <input type="submit" style="background-color: #0010ff8c; font-weight:bold;border-radius: 10px; padding:10px 10px ; " name="submit" id="tournament" value="Arrange Tornament" onclick="teamtornaments()">
+                    
+                     <input type="submit" class = "" style="background-color: #f07910; font-weight:bold;border-radius: 10px; padding:10px 10px ; " name="submit" id="tournament" value="Arrange Tornament" onclick="teamtornaments()"><span class="blink_me">Click Here to get the List of Tournament</span>
                   </div>
                </div>
             </div>
