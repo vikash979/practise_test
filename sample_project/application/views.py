@@ -15,6 +15,8 @@ from rest_framework import viewsets
 from . import serializers
 from django.template.loader import get_template
 from django.contrib.auth import authenticate,login,logout
+from rest_framework import permissions
+from rest_framework import authentication
 
 from collections import deque
 from itertools import islice
@@ -36,6 +38,10 @@ class TeamViews(TemplateView):
 		return render(request, self.template_name, context_data)
 
 class MenuApiView(APIView):
+	permission_classes = [permissions.IsAuthenticated]
+	authentication_classes = [authentication.SessionAuthentication]
+    #authentication_classes = [authentication.SessionAuthentication, authentication.TokenAuthentication]
+
 	def get(self,request):
 		
 
@@ -56,6 +62,8 @@ class MenuApiView(APIView):
 
 
 class TornamentView(APIView):
+	permission_classes = [permissions.IsAuthenticated]
+	authentication_classes = [authentication.SessionAuthentication]
 
 	def tournamentlist(self,teams):
 
@@ -75,6 +83,7 @@ class TornamentView(APIView):
 		    fixtures.append(return_matchs)
 		    roundmatchs = []
 		    return_matchs = []
+		print("::::::::::::::",fixtures)
 
 		teams_mate = []
 		for fixture in fixtures:
@@ -107,7 +116,7 @@ class TornamentView(APIView):
 		
 		
 		team_match =self.tournamentlist(team_data)
-		print(":::::::::!!!!!!!!!",team_data)
+		
 		return Response(team_match)
 
 
