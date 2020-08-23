@@ -25,24 +25,32 @@ class MatchesSerializer(serializers.ModelSerializer):
 		fields = '__all__'
 
 class playerHistorySerializer(serializers.ModelSerializer):
+	
 
 	class Meta:
 		model = playerHistory
 		fields = '__all__'
 
+	
+
 
 class TeamPlayerStructureSerializer(serializers.ModelSerializer):
 	playerhistory = playerHistorySerializer(many=True) 
+	team_player_name = serializers.SerializerMethodField()
 
 	class Meta:
 		model = TeamPlayerStructure
 		fields = '__all__'
+
+	def get_team_player_name(self,obj):
+		return (obj.firstname + " "+ obj.lastname)
 
 class teamStrucureSerializer(serializers.ModelSerializer):
 	teamstructure = TeamPlayerStructureSerializer(many=True)
 	#teammatcheswinner = MatchesSerializer(many=True)
 	winner_team = serializers.SerializerMethodField()
 	looser_team = serializers.SerializerMethodField()
+	
 	class Meta:
 		model = TeamStructure
 		fields = '__all__'
@@ -54,6 +62,7 @@ class teamStrucureSerializer(serializers.ModelSerializer):
 		match_objects['winner'] = Matches.objects.filter(winner_team=obj.id).count()
 
 		return(match_objects)
+
 
 	def get_looser_team(self,obj):
 		match_obj = Matches.objects.filter(looser_team=obj.id)
