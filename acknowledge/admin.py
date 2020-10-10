@@ -1,11 +1,11 @@
 from django.contrib import admin
 from .models import (graphDetailUsed, ack_subMenuPolicyFile, ack_NavyInstructionname, ack_Navyname, ack_Standardsname, 
-	ack_guidelinesname, BRsmenu, ack_subpublicationmenu,acknoledge_menu,parent_menu,ack_submenu,ack_policyname, 
+	ack_guidelinesname, BRsmenu, ack_subpublicationmenu,acknoledge_menu,parent_menu,Ack_submenu,ack_policyname, 
 	ack_policypolicyfile,ack_publicationname, ack_subGuidelinesmenu, ack_subStandardsmenu, ack_subNavy_Orderssmenu, graphDetail, 
 	 ack_subNavy_Instructionssmenu, KnowledgeUser, PublicationUser, InstructionUser, NavyUser, StandardUser, GuideLinesUser)
 admin.site.register(acknoledge_menu)
 admin.site.register(parent_menu)
-admin.site.register(ack_submenu)
+admin.site.register(Ack_submenu)
 admin.site.register(ack_policyname)
 #admin.site.register(ack_policypolicyfile)
 #admin.site.register(ack_publicationfile)

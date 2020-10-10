@@ -6,7 +6,7 @@ from othersites.models import otherSites_menu
 
 from .models import (ack_NavyInstructionname, ack_Navyname,graphDetail, ack_publicationname, 
   ack_Standardsname,graphDetailUsed,  ack_guidelinesname , BRsmenu, ack_subGuidelinesmenu, 
-  ack_subpublicationmenu,acknoledge_menu,parent_menu,ack_submenu,ack_policyname,ack_policypolicyfile, ack_subStandardsmenu, 
+  ack_subpublicationmenu,acknoledge_menu,parent_menu,Ack_submenu,ack_policyname,ack_policypolicyfile, ack_subStandardsmenu, 
   ack_subNavy_Orderssmenu, ack_subNavy_Instructionssmenu ,ack_subNHQe_Librarylinesmenu, ack_subMenuPolicyFile, KnowledgeUser)
 
 class application_menuSerializer(serializers.ModelSerializer):
@@ -88,7 +88,7 @@ class AckenowledgeSubmenuSerializer(serializers.ModelSerializer):
 	
 
 	class Meta:
-		model= ack_submenu
+		model= Ack_submenu
 		fields= '__all__'
 
 	# def get_all_children(self,id,menubar,lists=None):
@@ -260,7 +260,7 @@ class  AckenowledgeSerializer(serializers.ModelSerializer):
 	def get_ascsubmenu_count(self,obj):
 
 		#submenu = ack_submenu.objects.filter(parent_id=obj.id).order_by("-id")[:4]
-		submenu  = ack_submenu.objects.all().order_by("-id")[:4]
+		submenu  = Ack_submenu.objects.all().order_by("-id")[:4]
 		#return AckenowledgeSubmenuSerializer(submenu,many=True).data
 		return AckenowledgeSubmenuSerializer(submenu,many=True).data
 	#

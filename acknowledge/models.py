@@ -36,6 +36,8 @@ class parent_menu(models.Model):
     def __str__(self):
         return self.menu_name
 
+
+
 class acknoledge_menu(models.Model):
     menu_choice = (
         (1, "One"),
@@ -50,10 +52,12 @@ class acknoledge_menu(models.Model):
     def __str__(self):
     	return self.menu_name
 
+    def main_menu(self):
+        return self.acknoledge_menu_set.all()
 
 
 
-class ack_submenu(models.Model):
+class Ack_submenu(models.Model):
     menu_choice = (
         (1, "One"),
         (2, "Two"),
@@ -104,11 +108,14 @@ class ack_submenu(models.Model):
 
 
 class KnowledgeUser(models.Model):
-    user = models.ForeignKey(ack_submenu,null=True, related_name ="menu_user", blank=True, on_delete=models.SET_NULL)
+    user = models.ForeignKey(Ack_submenu,null=True, related_name ="menu_user", blank=True, on_delete=models.SET_NULL)
     menu_user = models.ForeignKey(settings.AUTH_USER_MODEL, null=True,on_delete=models.SET_NULL)
 
     def __str__(self):
         return self.user.submenu_name
+
+    def main_page(self):
+        return self.KnowledgeUser_set.all()
 
 
 
@@ -117,7 +124,7 @@ class ack_subMenuPolicyFile(models.Model):
     added_on = models.DateField(auto_now=True)
     updated_on = models.DateField(auto_now=True)
     submenu_name =  models.CharField(max_length=200)
-    parent_ob  = models.ForeignKey(ack_submenu,null=True, blank=True,related_name='ack_submenu_children', on_delete=models.SET_NULL)
+    parent_ob  = models.ForeignKey(Ack_submenu,null=True, blank=True,related_name='ack_submenu_children', on_delete=models.SET_NULL)
   #  menu_type = models.SmallIntegerField(choices=menu_choice, default=1)
 
    # folder_type = models.SmallIntegerField(choices=folder_choice, default=2)
@@ -520,7 +527,7 @@ class ack_policyname(models.Model):
     added_on = models.DateField(auto_now_add=True)
     updated_on = models.DateField(auto_now=True)
     policy_name = models.CharField(max_length=200,unique=True)
-    parent = models.ForeignKey(ack_submenu,null=True, related_name ="policy_name" , blank=True, on_delete=models.SET_NULL)
+    parent = models.ForeignKey(Ack_submenu,null=True, related_name ="policy_name" , blank=True, on_delete=models.SET_NULL)
     #policy_file =  GenericRelation(Comment_policy,related_query_name='blog_model')
     parent_ob  = models.ForeignKey("self",null=True, blank=True, on_delete=models.SET_NULL)
     folder_type = models.SmallIntegerField(choices=folder_choice, default=2)

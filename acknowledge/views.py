@@ -15,7 +15,7 @@ from .models import (ack_subStandardsmenu, ack_Navyname, ack_subNavy_Orderssmenu
  ack_subGuidelinesmenu, ack_Standardsname,  graphDetail,ack_guidelinesname,
   ack_subMenuPolicyFile, ack_subNavy_Instructionssmenu,graphDetailUsed,
    ack_subpublicationmenu, ack_publicationname, acknoledge_menu,parent_menu,
-   ack_submenu, ack_policyname, ack_policypolicyfile,
+   Ack_submenu, ack_policyname, ack_policypolicyfile,
     ack_NavyInstructionname, KnowledgeUser, PublicationUser, InstructionUser,
      NavyUser, GuideLinesUser, StandardUser)
 from django.contrib.auth import get_user_model
@@ -127,10 +127,10 @@ class knowledgeGraphApi(APIView):
 	def get(self,request, format=None):
 		
 		if request.GET.get('menubar')  == 'Policy':
-			policy_name =  ack_submenu.objects.filter(parent_ob_id=None).values('submenu_name','id')
+			policy_name =  Ack_submenu.objects.filter(parent_ob_id=None).values('submenu_name','id')
 			serializer = serializers.AckenowledgeSubmenuSerializer(policy_name, many=True)
 			policy =[]
-			policyId =  self.get_all_children(ack_submenu)
+			policyId =  self.get_all_children(Ack_submenu)
 			# print("&&&&&&&&&&&&&&&&&", policy_name)
 		return Response(serializer.data)
 
@@ -157,10 +157,10 @@ def graphCount(request):
 	policyobjIds = []
 	barobjIds = []
 	if request.GET.get('menubar')  == 'Policy':
-		policy_name =  ack_submenu.objects.filter(parent_ob_id=None).values('submenu_name','id')
+		policy_name =  Ack_submenu.objects.filter(parent_ob_id=None).values('submenu_name','id')
 		
 		for x in policy_name:
-			policyId  =  get_all_children(x['id'], ack_submenu )
+			policyId  =  get_all_children(x['id'], Ack_submenu )
 			graph_count = ack_subMenuPolicyFile.objects.filter(parent_ob__in=policyId).count()
 			graph_record = {x['submenu_name']: graph_count}
 			graph_records = {"name": x['submenu_name'], "y": graph_count}
@@ -335,12 +335,12 @@ class policyViewApi(APIView):
 
 
 
-			policy_name =  ack_submenu.objects.filter(id=id ).values()# | ack_submenu.objects.filter(parent_ob_id=id ).values()
+			policy_name =  Ack_submenu.objects.filter(id=id ).values()# | ack_submenu.objects.filter(parent_ob_id=id ).values()
 			policy =[]
 
-			policyId =  self.get_all_children(id,ack_submenu)
+			policyId =  self.get_all_children(id,Ack_submenu)
 			
-			policy_name =  ack_submenu.objects.filter(id__in=policyId )
+			policy_name =  Ack_submenu.objects.filter(id__in=policyId )
 			policy_file = ack_subMenuPolicyFile.objects.filter(parent_ob_id=id)
 			#print("::::::::::::::",policy_file.values())
 
@@ -431,7 +431,7 @@ class knowledgeMat(APIView):
 	def get(self, request):
 		# print("!!!!!!!!!!!!", request.GET.get('menubar') )
 		if request.GET.get('menubar') == 'Policy':
-			submenu = ack_submenu.objects.filter(parent_ob_id=None,folder_type=2, status=2, file_type=request.GET.get('file_type'))
+			submenu = Ack_submenu.objects.filter(parent_ob_id=None,folder_type=2, status=2, file_type=request.GET.get('file_type'))
 			if request.GET.get('page') == None:
 				page =1
 			else:
@@ -546,7 +546,7 @@ class AckpolicyAPI(APIView):
 		print(request.GET.get('menubar'))
 
 		if request.GET.get('menubar') == 'Policy':
-			submenu = ack_submenu.objects.filter(parent_ob_id=id,folder_type=2, status=2, file_type=request.GET.get('file_type'))
+			submenu = Ack_submenu.objects.filter(parent_ob_id=id,folder_type=2, status=2, file_type=request.GET.get('file_type'))
 
 			serializer = serializers.AckenowledgeSubmenuSerializer(submenu,many=True)
 			data_record = {"policy": serializer.data}
@@ -627,10 +627,10 @@ class acknowledgeViews(TemplateView):
         menu_id = graphDetail.objects.get(menu_detail=acknoledge_menu.objects.get(menu_name=request.GET.get('menutype')).id).id
         graphDetailUsed.objects.create(menu_detail_id=menu_id, menu_user=User.objects.get(username=request.user.username))
         if request.GET.get('menutype') =='Policy' :
-            policy_data = ack_submenu.objects.filter(parent_ob_id=None, status=2, file_type=1,
+            policy_data = Ack_submenu.objects.filter(parent_ob_id=None, status=2, file_type=1,
              parent_id=acknoledge_menu.objects.get(menu_name=request.GET.get('menutype')).id)
-            policy_obj = ack_submenu.objects.filter(parent_ob_id=None)
-            policy_id = self.get_all_child(ack_submenu,request.GET.get('menutype'),ack_subMenuPolicyFile)
+            policy_obj = Ack_submenu.objects.filter(parent_ob_id=None)
+            policy_id = self.get_all_child(Ack_submenu,request.GET.get('menutype'),ack_subMenuPolicyFile)
             
         elif request.GET.get('menutype') =='Publication' :
             policy_data = ack_subpublicationmenu.objects.filter(parent_ob_id=None, file_type=1, 
@@ -705,7 +705,7 @@ class ack_menudetail(TemplateView):
 		for menu in ack_menu:
 
 			menu_obj.append(menu['menu_name'])
-			manu_cnt = ack_submenu.objects.filter(parent_id=menu['id']).count()
+			manu_cnt = Ack_submenu.objects.filter(parent_id=menu['id']).count()
 			menu_count.append(manu_cnt)
 
 		context_data['data'] = menu_obj
